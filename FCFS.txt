@@ -1,0 +1,57 @@
+#include<stdio.h>
+int main()
+{
+    int p;
+    printf("Enter the number of process: ");
+    scanf("%d",&p);
+    int a[p];
+    for(int i=0;i<p;i++)
+    {
+        printf("Enter the execution time for %dth process in milliseconds: ",i+1);
+        scanf("%d",&a[i]);
+    }
+    
+    
+    
+    int wt[p];
+    for(int i=2;i<p;i++)
+    {
+        wt[0]=0;
+        wt[1]=a[0];
+        wt[i]=a[i-1]+wt[i-1];
+    }
+    int tat[p];
+    for(int i=0;i<p;i++)
+    {
+        tat[i]=wt[i]+a[i];
+    }
+    printf("|Number of process\t\t|Execution Time\t\t|Waiting Time\t\t|TAT|\n");
+    for(int i=0;i<p;i++)
+        printf("|%d\t\t\t\t|%d\t\t\t|%d\t\t\t|%d |\n",i+1,a[i],wt[i],tat[i]);
+    float sum1=0,sum2=0;
+    for(int i=0;i<p;i++)
+    {
+        sum1=wt[i]+sum1;
+        sum2=tat[i]+sum2;
+    }
+    int awt=sum1/p;
+    int att=sum2/p;
+    printf("\nAverage Waiting Time : %d",awt);
+    printf("\nAverage TAT Time : %d\n",att);
+    return 0;
+}
+/*
+Enter the number of process: 4
+Enter the execution time for 1th process in milliseconds: 8
+Enter the execution time for 2th process in milliseconds: 2
+Enter the execution time for 3th process in milliseconds: 10
+Enter the execution time for 4th process in milliseconds: 5
+|Number of process		|Execution Time		|Waiting Time		|TAT|
+|1				|8			|0			|8 |
+|2				|2			|8			|10 |
+|3				|10			|10			|20 |
+|4				|5			|20			|25 |
+
+Average Waiting Time : 9
+Average TAT Time : 15
+*/
